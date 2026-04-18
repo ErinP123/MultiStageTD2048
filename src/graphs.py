@@ -15,7 +15,7 @@ def ms_td():
     plt.grid(True, alpha=0.3)
     plt.legend()
     plt.tight_layout()
-    plt.savefig('learning_curve.png', dpi=150)
+    plt.savefig('./figs/MultiStageLearningCurve.png', dpi=150)
     plt.show()
 
 def single_td():
@@ -27,11 +27,10 @@ def single_td():
 
     plt.xlabel('Training Episodes')
     plt.ylabel('Average Evaluation Score (per 1,000 games)')
-    plt.title('Single-TD Learning Curve — Stage 2 Training')
+    plt.title('Single-TD Learning Curve')
     plt.grid(True, alpha=0.3)
-    plt.legend()
     plt.tight_layout()
-    plt.savefig('learning_curve.png', dpi=150)
+    plt.savefig('./figs/SingleStageLearningCurve.png', dpi=150)
     plt.show()
 
 ms_td()
