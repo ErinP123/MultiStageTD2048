@@ -4,3 +4,6 @@ SingleStage:
 
 MultiStage:
 	python -B src/multistage.py
+
+Graphs:
+	python -B src/graphs.py

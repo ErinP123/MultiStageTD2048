@@ -1,10 +1,11 @@
-1024
+
+# Outputs for TD(0) Baseline 
 
 ```
 Final evaluation (1,000 games):
 ── TD(0) baseline ── (1000 games)
-  Score   mean=    22,526  std=   10,288  max=    67,152
-  Tile    mean=     1,531  max= 4,096
+  Score   mean=22,526  std= 10,288  max=67,152
+  Tile    mean= 1,531  max= 4,096
   Reach   >=256: 99.7%  >=512: 98.1%  >=1024: 87.5%  >=2048: 54.1%  >=4096:  1.1%
   Distribution:
         64:    2  
@@ -58,58 +59,7 @@ Saved → td0_final.npz
 ```
 
 
-```
-TD(0) baseline | NTupleNetwork(8 tuples × 4 cells, LUT=65,536, mem=2.1 MB)
-Training 50,000 episodes, alpha=0.1
-
-  ep   2,000 | train    3,873 | eval    5,174 | >=2048:  0.0% | best:  1024 |     3 ep/s
-  ep   4,000 | train    5,603 | eval    6,032 | >=2048:  0.0% | best:  1024 |     2 ep/s
-  ep   6,000 | train    6,367 | eval    6,690 | >=2048:  0.0% | best:  1024 |     2 ep/s
-  ep   8,000 | train    7,233 | eval    7,096 | >=2048:  0.0% | best:  1024 |     2 ep/s
-  ep  10,000 | train    7,857 | eval    8,185 | >=2048:  0.5% | best:  2048 |     2 ep/s
-Saved → td0_ep10000_512.npz
-  ep  12,000 | train    8,520 | eval    8,459 | >=2048:  0.5% | best:  2048 |     2 ep/s
-  ep  14,000 | train    9,127 | eval    9,221 | >=2048:  1.0% | best:  2048 |     2 ep/s
-  ep  16,000 | train    9,882 | eval   10,209 | >=2048:  4.0% | best:  2048 |     2 ep/s
-  ep  18,000 | train   10,715 | eval   11,592 | >=2048:  9.0% | best:  2048 |     2 ep/s
-  ep  20,000 | train   11,642 | eval   11,991 | >=2048:  7.0% | best:  2048 |     1 ep/s
-Saved → td0_ep20000_512.npz
-  ep  22,000 | train   12,891 | eval   12,879 | >=2048: 16.0% | best:  2048 |     1 ep/s
-  ep  24,000 | train   14,256 | eval   16,328 | >=2048: 29.5% | best:  2048 |     1 ep/s
-  ep  26,000 | train   15,606 | eval   16,634 | >=2048: 29.0% | best:  4096 |     1 ep/s
-  ep  28,000 | train   16,814 | eval   17,653 | >=2048: 31.5% | best:  4096 |     1 ep/s
-  ep  30,000 | train   18,491 | eval   18,929 | >=2048: 34.0% | best:  4096 |     1 ep/s
-Saved → td0_ep30000_512.npz
-  ep  32,000 | train   20,017 | eval   21,450 | >=2048: 48.0% | best:  4096 |     1 ep/s
-  ep  34,000 | train   20,508 | eval   21,673 | >=2048: 50.0% | best:  4096 |     1 ep/s
-  ep  36,000 | train   21,125 | eval   20,382 | >=2048: 46.5% | best:  4096 |     1 ep/s
-  ep  38,000 | train   21,474 | eval   22,238 | >=2048: 54.5% | best:  4096 |     1 ep/s
-  ep  40,000 | train   22,935 | eval   21,508 | >=2048: 51.5% | best:  4096 |     1 ep/s
-Saved → td0_ep40000_512.npz
-  ep  42,000 | train   22,886 | eval   20,931 | >=2048: 47.0% | best:  4096 |     1 ep/s
-  ep  44,000 | train   23,024 | eval   22,563 | >=2048: 53.5% | best:  4096 |     1 ep/s
-  ep  46,000 | train   23,298 | eval   24,439 | >=2048: 63.0% | best:  4096 |     1 ep/s
-  ep  48,000 | train   22,982 | eval   22,420 | >=2048: 53.5% | best:  4096 |     1 ep/s
-  ep  50,000 | train   23,006 | eval   23,106 | >=2048: 54.5% | best:  4096 |     1 ep/s
-Saved → td0_ep50000_512.npz
-
-Done: 50,000 episodes in 920.9 min (1 ep/s)
-Table coverage: 33.2% of entries trained
-Saved → td0_final_512.npz
-
-Final evaluation (1,000 games):
-── TD(0) baseline ── (1000 games)
-  Score   mean=    23,340  std=   10,667  max=    58,732
-  Tile    mean=     1,576  max= 4,096
-  Reach   >=256: 99.7%  >=512: 96.7%  >=1024: 86.8%  >=2048: 57.4%  >=4096:  2.0%
-  Distribution:
-       128:    3  
-       256:   30  █
-       512:   99  ███
-      1024:  294  ███████████
-      2048:  554  ██████████████████████
-      4096:   20  
-```
+# Outputs for Multi Stage Training Model
 
 ```
 *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*-
@@ -246,8 +196,8 @@ Saved → ms_final_stage2.npz
 
 Final evaluation — Multi-stage agent (1,000 games):
 ── Multi-stage TD ── (1000 games)
-  Score   mean=    16,108  std=   10,540  max=    59,632
-  Tile    mean=     1,095  max= 4,096
+  Score   mean= 16,108  std=10,540  max=59,632
+  Tile    mean= 1,095  max= 4,096
   Reach   >=256: 98.9%  >=512: 81.5%  >=1024: 65.1%  >=2048: 28.5%  >=4096:  0.3%
   Distribution:
        128:   11  
@@ -351,8 +301,8 @@ Saved → ms_final_stage2.npz
 
 Final evaluation — Multi-stage agent (1,000 games):
 ── Multi-stage TD ── (1000 games)
-  Score   mean=    14,123  std=   10,371  max=    59,336
-  Tile    mean=       962  max= 4,096
+  Score   mean= 14,123  std=10,371  max=59,336
+  Tile    mean= 962  max= 4,096
   Reach   >=256: 99.1%  >=512: 90.2%  >=1024: 51.0%  >=2048: 19.0%  >=4096:  1.0%
   Distribution:
         64:    1  
