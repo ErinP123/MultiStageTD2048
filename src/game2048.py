@@ -332,10 +332,10 @@ def start_game() -> List[List[int]]:
     """Initialise a new game matrix and print the control instructions."""
     mat = [[0] * 4 for _ in range(4)]
     print("Commands are as follows:")
-    print("  'W' or 'w' : Move Up")
-    print("  'S' or 's' : Move Down")
-    print("  'A' or 'a' : Move Left")
-    print("  'D' or 'd' : Move Right")
+    print("'W' or 'w' : Move Up")
+    print("'S' or 's' : Move Down")
+    print("'A' or 'a' : Move Left")
+    print("'D' or 'd' : Move Right")
     _add_new_tile(mat)
     return mat
 
@@ -367,13 +367,13 @@ def play_interactive():
             print("Unknown key, try w/a/s/d.")
             continue
 
-        direction               = key_map[key]
+        direction = key_map[key]
         new_mat, changed, move_score = _MOVE_FN[direction](mat)
         if not changed:
             print("That move doesn't change the board, try another.")
             continue
 
-        mat    = new_mat
+        mat = new_mat
         score += move_score
         _add_new_tile(mat)
 
