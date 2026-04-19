@@ -22,8 +22,8 @@ tuples: List[List[int]] = [
 ]
 
 num_exponents = 16  #Exponents
-tuple_length  = 4
-look_up_table   = num_exponents ** tuple_length   # 16^4 = 65,536
+tuple_length= 4
+look_up_table= num_exponents ** tuple_length   # 16^4 = 65,536
 
 
 
@@ -66,14 +66,14 @@ class NTupleNetwork:
     def load(cls, path: str) -> "NTupleNetwork":
         path = path if path.endswith(".npz") else path + ".npz"
         data = np.load(path)
-        net  = cls()
+        net= cls()
         for i, key in enumerate(sorted(data.files)):
             net.luts[i] = data[key]
         print(f"Loaded {path}")
         return net
 
     def nonzero_ratio(self) -> float:
-        total   = sum(l.size for l in self.luts)
+        total= sum(l.size for l in self.luts)
         nonzero = sum(int(np.count_nonzero(l)) for l in self.luts)
         return nonzero / total
 

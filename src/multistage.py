@@ -4,9 +4,8 @@ import time
 from typing import List, Tuple, Optional
 
 from game2048 import (
-    new_board, add_random_tile, apply_move, is_terminal,
-    get_valid_moves, spawn_probability, max_tile, max_tile_exp,
-)
+new_board, add_random_tile, apply_move, is_terminal,
+get_valid_moves, spawn_probability, max_tile, max_tile_exp)
 from ntuple_network import NTupleNetwork
 from td0_agent import select_move, evaluate, report
 
@@ -96,10 +95,10 @@ def select_move_ms(board: np.ndarray, agent: MultiStageAgent) -> Tuple[int, np.n
     After a tile spawn, if the spawn>max(512, 1028), swap to Stage2
     """
     #Start reallllly low
-    best_q          = -np.inf
-    best_dir        = -1
+    best_q= -np.inf
+    best_dir= -1
     best_afterstate = None
-    best_score      = 0
+    best_score= 0
 
     for direction in get_valid_moves(board):
         afterstate, score, _ = apply_move(board, direction)
@@ -109,10 +108,10 @@ def select_move_ms(board: np.ndarray, agent: MultiStageAgent) -> Tuple[int, np.n
         q = score + expected_v
 
         if q > best_q:
-            best_q          = q
-            best_dir        = direction
+            best_q= q
+            best_dir= direction
             best_afterstate = afterstate
-            best_score      = score
+            best_score= score
     ##Get move with. the best possibly outcome 
     return best_dir, best_afterstate, best_score
 
@@ -153,10 +152,10 @@ def run_episode_stage(agent:MultiStageAgent,target_stage:int, alpha:float,rng:np
         board = add_random_tile(add_random_tile(new_board(), rng), rng)
 
     total_score = 0
-    crossed_boundary  = False
+    crossed_boundary= False
 
     while not is_terminal(board):
-        current_stage  = get_stage(board)
+        current_stage= get_stage(board)
         direction, afterstate, score = select_move_ms(board, agent)
         next_board= add_random_tile(afterstate, rng)
         total_score+= score
@@ -188,11 +187,11 @@ def train_multistage(stage2_episodes:int= 30_000, stage1_episodes:int = 30_000,a
     """
     Train the multi-stage agent in reverse order:
         1. Train Stage 2 (Board>1024) — no cross-stage bootstrap
-        2. Train Stage 1 (board<1024) — uses  Stage 2 
+        2. Train Stage 1 (board<1024) — uses Stage 2 
 
     Returns (agent, history).
     """
-    rng   = np.random.default_rng(seed)
+    rng= np.random.default_rng(seed)
     agent = MultiStageAgent()
 
     history = {
@@ -213,9 +212,9 @@ def train_multistage(stage2_episodes:int= 30_000, stage1_episodes:int = 30_000,a
         history["s2_tiles"].append(tile)
 
         if ep % eval_every == 0:
-            elapsed  = time.time() - t0
-            roll  = np.mean(history["s2_scores"][-eval_every:])
-            best  = max(history["s2_tiles"][-eval_every:])
+            elapsed= time.time() - t0
+            roll = np.mean(history["s2_scores"][-eval_every:])
+            best = max(history["s2_tiles"][-eval_every:])
             cross_pct = 100 * np.mean([t >= boundary for t in history["s2_tiles"][-eval_every:]])
             print(
                 f"[S2] ep {ep:>6,} |"
@@ -251,10 +250,10 @@ def train_multistage(stage2_episodes:int= 30_000, stage1_episodes:int = 30_000,a
             history["eval_tiles"].append(float(np.mean(e_tiles)))
             history["eval_at"].append(ep)
 
-            elapsed  = time.time() - t0
-            win_pct  = 100 * np.mean([t >= 2048 for t in e_tiles])
-            roll     = np.mean(history["s1_scores"][-eval_every:])
-            best     = max(history["s1_tiles"][-eval_every:])
+            elapsed = time.time() - t0
+            win_pct = 100 * np.mean([t >= 2048 for t in e_tiles])
+            roll= np.mean(history["s1_scores"][-eval_every:])
+            best= max(history["s1_tiles"][-eval_every:])
 
             print(
                 f"[S1] ep {ep:>6,} | "

@@ -29,7 +29,7 @@ def select_move(board: np.ndarray, net: NTupleNetwork) -> Tuple[int, np.ndarray,
         afterstate, score, _ = apply_move(board, direction)
         spawns = spawn_probability(afterstate)
         expected_v = sum(p * net.evaluate(b) for b, p in spawns) if spawns else 0.0
-        q  = score + expected_v
+        q= score + expected_v
         if q > best_q:
             best_q = q
             best_dir= direction
@@ -47,8 +47,8 @@ def td_update(net:NTupleNetwork, afterstate: np.ndarray, reward:int,next_afterst
     TD(0) update 
     """
     v_current = net.evaluate(afterstate)
-    v_next    = 0.0 if terminal else net.evaluate(next_afterstate)
-    delta     = reward + v_next - v_current
+    v_next= 0.0 if terminal else net.evaluate(next_afterstate)
+    delta = reward + v_next - v_current
     net.update(afterstate, delta, alpha)
 
 
@@ -79,7 +79,7 @@ def run_episode(net: NTupleNetwork, alpha: float, rng: np.random.Generator) -> T
 
 
 def train(episodes: int= 50_000, alpha:float = 0.1, eval_every:int = 1_000, eval_games:int = 200,
-    checkpoint_every: int  = 10_000, checkpoint_path:str= "td0_checkpoint",seed:int   = 42,) -> Tuple[NTupleNetwork, dict]:
+    checkpoint_every: int= 10_000, checkpoint_path:str= "td0_checkpoint",seed:int   = 42,) -> Tuple[NTupleNetwork, dict]:
     """
     Train the TD(0) baseline agent.
 
@@ -90,7 +90,7 @@ def train(episodes: int= 50_000, alpha:float = 0.1, eval_every:int = 1_000, eval
     print(f"Training {episodes:,} episodes, alpha={alpha}\n")
 
     history = {
-        "scores":[],   # per-episode training score
+        "scores":[],  # per-episode training score
         "tiles":[],   # per-episode max tile
         "eval_scores": [],   # mean score at each eval point
         "eval_tiles":  [],   # mean max tile at each eval point
@@ -110,14 +110,14 @@ def train(episodes: int= 50_000, alpha:float = 0.1, eval_every:int = 1_000, eval
             history["eval_tiles"].append(float(np.mean(e_tiles)))
             history["eval_at"].append(ep)
 
-            elapsed  = time.time() - t0
-            speed    = ep / elapsed
-            win_pct  = 100 * np.mean([t >= 2048 for t in e_tiles])
+            elapsed= time.time() - t0
+            speed= ep / elapsed
+            win_pct= 100 * np.mean([t >= 2048 for t in e_tiles])
             roll_avg = np.mean(history["scores"][-eval_every:])
-            best     = max(history["tiles"][-eval_every:])
+            best= max(history["tiles"][-eval_every:])
 
             print(
-                f"  ep {ep:>7,} | "
+                f"ep {ep:>7,} | "
                 f"train {roll_avg:>8,.0f} | "
                 f"eval {np.mean(e_scores):>8,.0f} | "
                 f">=2048: {win_pct:4.1f}% | "
@@ -135,7 +135,7 @@ def train(episodes: int= 50_000, alpha:float = 0.1, eval_every:int = 1_000, eval
 def evaluate(net:NTupleNetwork,episodes: int = 1_000, rng:Optional[np.random.Generator] = None,
     seed: int = 0,) -> Tuple[List[int], List[int]]:
     """
-    Play episodes games  (expectiminimax
+    Play episodes games(expectimax
     Returns (scores, max_tiles).
     """
     if rng is None:
@@ -161,9 +161,9 @@ def report(scores: List[int], tiles: List[int], label: str = "Agent") -> str:
     t = np.array(tiles)
     lines = [
         f"── {label} ── ({len(scores)} games)",
-        f"  Score   mean={s.mean():>10,.0f}  std={s.std():>9,.0f}  max={s.max():>10,}",
-        f"  Tile    mean={t.mean():>10,.0f}  max={int(t.max()):>6,}",
-        "  Reach   " + "  ".join(
+        f"  Score mean={s.mean():>10,.0f}  std={s.std():>9,.0f}  max={s.max():>10,}",
+        f"  Tile mean={t.mean():>10,.0f}  max={int(t.max()):>6,}",
+        "  Reach" + "  ".join(
             f">={v}: {100*np.mean(t>=v):4.1f}%"
             for v in [256, 512, 1024, 2048, 4096]
         ),
@@ -172,7 +172,7 @@ def report(scores: List[int], tiles: List[int], label: str = "Agent") -> str:
     vals, counts = np.unique(t, return_counts=True)
     for v, c in zip(vals, counts):
         bar = "█" * int(40 * c / len(scores))
-        lines.append(f"    {int(v):>6}: {int(c):>4}  {bar}")
+        lines.append(f"{int(v):>6}: {int(c):>4}  {bar}")
     return "\n".join(lines)
 
 
@@ -183,7 +183,7 @@ if __name__ == "__main__":
         eval_games = 200,
         checkpoint_every= 10_000,
         checkpoint_path = "td0",
-        seed= 42,
+        seed= 811,
     )
 
     net.save(f"td0_final_512")

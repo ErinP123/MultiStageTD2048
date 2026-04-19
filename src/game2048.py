@@ -7,14 +7,14 @@ board_length = 4
 board_size  = board_length **2   # 16
 
 left  = 0
-up    = 1
+up = 1
 right = 2
 down  = 3
 direction_names = {left: "LEFT", up: "UP", right: "RIGHT", down: "DOWN"}
 
 tile_2_prob = 0.9
 tile_4_prob = 0.1
-max_tile_exp = 15  # one greater than making it 2048
+max_tile_exp = 15  # tile 11 is 2048
 
 
 
@@ -40,8 +40,8 @@ def _merge(mat: List[List[int]]) -> Tuple[List[List[int]], bool, int]:
     for i in range(4):
         for j in range(3):
             if mat[i][j] != 0 and mat[i][j] == mat[i][j + 1]:
-                mat[i][j]     *= 2
-                mat[i][j + 1]  = 0
+                mat[i][j]*= 2
+                mat[i][j + 1] = 0
                 score += mat[i][j]
                 changed = True
     return mat, changed, score
@@ -60,7 +60,7 @@ def _transpose(mat: List[List[int]]) -> List[List[int]]:
 def _move_left(grid: List[List[int]]) -> Tuple[List[List[int]], bool, int]:
     """Slide all tiles left. Returns (new_grid, changed, score)."""
     g,c1 = _compress(grid)
-    g, c2, score  = _merge(g)
+    g, c2, score = _merge(g)
     g, _ = _compress(g) # compact again after merges clear gaps
     return g, (c1 or c2), score
 
@@ -81,10 +81,10 @@ def _move_down(grid: List[List[int]]) -> Tuple[List[List[int]], bool, int]:
 
 
 _MOVE_FN = {
-    left:  _move_left,
+    left:_move_left,
     right: _move_right,
-    up:    _move_up,
-    down:  _move_down,
+    up:_move_up,
+    down:_move_down,
 }
 
 def _find_empty(mat: List[List[int]]) -> Optional[Tuple[int, int]]:
@@ -201,9 +201,9 @@ def max_tile_exp(board: np.ndarray) -> int:
 
 def apply_move(board: np.ndarray, direction: int) -> Tuple[np.ndarray, int, bool]:
   
-    mat                    = _board_to_mat(board)
+    mat= _board_to_mat(board)
     new_mat, changed, score = _MOVE_FN[direction](mat)
-    afterstate             = _mat_to_board(new_mat)
+    afterstate = _mat_to_board(new_mat)
     return afterstate, int(score), changed
 
 
@@ -227,7 +227,7 @@ def add_random_tile(board: np.ndarray, rng: Optional[np.random.Generator] = None
     Spawn a 2 (90%) or 4 (10%) on a random empty cell.
     Returns a NEW board; does not modify in place.
     """
-    mat     = _board_to_mat(board)
+    mat= _board_to_mat(board)
     new_mat = [row[:] for row in mat]
     _add_new_tile(new_mat)
     return _mat_to_board(new_mat)
@@ -240,10 +240,10 @@ def spawn_probability(board: np.ndarray) -> List[Tuple[np.ndarray, float]]:
         return []
 
     p_per_cell = 1.0 / len(empty)
-    results    = []
+    results= []
     for cell in empty:
         for tile_exp, tile_prob in [(1, tile_2_prob), (2, tile_4_prob)]:
-            new_b       = board.copy()
+            new_b= board.copy()
             new_b[cell] = tile_exp
             results.append((new_b, p_per_cell * tile_prob))
     return results
@@ -303,7 +303,7 @@ def run_game(policy,rng: Optional[np.random.Generator] = None,max_moves: int = 1
     _add_new_tile(mat)
     board = _mat_to_board(mat)
 
-    total_score: int    = 0
+    total_score: int= 0
     tile_history: List[int] = []
 
     for _ in range(max_moves):
@@ -321,7 +321,7 @@ def run_game(policy,rng: Optional[np.random.Generator] = None,max_moves: int = 1
             afterstate, score, _ = apply_move(board, direction)
 
         total_score += score
-        board        = add_random_tile(afterstate, rng)
+        board= add_random_tile(afterstate, rng)
         tile_history.append(max_tile(board))
 
     return total_score, max_tile(board), tile_history
