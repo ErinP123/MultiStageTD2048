@@ -143,7 +143,7 @@ def run_episode_stage(agent:MultiStageAgent,target_stage:int, alpha:float,rng:np
     For stage 1 training: updates happen on Stage 1 moves. 
 
     Returns (total_score, max_tile, crossed_boundary).
-    crossed_boundary = True if the game ever reached Stage 2.
+   
     """
     # Stage 1 starts from a fresh board as normal.
     if target_stage == 2:
@@ -180,14 +180,14 @@ def run_episode_stage(agent:MultiStageAgent,target_stage:int, alpha:float,rng:np
 
 
 
-def train_multistage(stage2_episodes:int= 30_000, stage1_episodes:int = 30_000,alpha:            float = 0.1,
+def train_multistage(stage2_episodes:int= 30_000, stage1_episodes:int = 30_000,alpha: float = 0.1,
     eval_every:int= 1_000, eval_games:int= 200, checkpoint_every: int= 10_000,
     checkpoint_prefix: str = "ms",seed:int= 811,
 ) -> Tuple[MultiStageAgent, dict]:
     """
     Train the multi-stage agent in reverse order:
-        1. Train Stage 2 (Board>1024) — no cross-stage bootstrap
-        2. Train Stage 1 (board<1024) — uses Stage 2 
+        1. Train Stage 2 (Board>boundary) — no  bootstrap
+        2. Train Stage 1 (board<boundary) — uses Stage 2 
 
     Returns (agent, history).
     """
